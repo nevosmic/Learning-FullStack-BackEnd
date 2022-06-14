@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require("uuid");
 const HttpError = require("../models/http-error");
 
 /*a controller file contains all middleware functions */
@@ -70,6 +71,21 @@ const getPlacesByUserId = (req, res, next) => {
     res.json({ userPlaces });
   }
 };
-
+//TODO : validation on body data
+const createPlace = (req, res, next) => {
+  console.log("POST request ADD PLACE");
+  const { title, description, coordinates, address, creator } = req.body;
+  const createdPlace = {
+    id: uuidv4(),
+    title,
+    description,
+    location: coordinates,
+    address,
+    creator,
+  };
+  Dummy_Places.push(createdPlace); // unshift instead of push adds to the first place
+  res.status(201).json({ place: createdPlace });
+};
 exports.getPlaceById = getPlaceById;
 exports.getPlacesByUserId = getPlacesByUserId;
+exports.createPlace = createPlace;
