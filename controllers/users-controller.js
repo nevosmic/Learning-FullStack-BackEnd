@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
+const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 
 const Dummy_Users = [
@@ -15,6 +16,17 @@ const getUsers = (req, res, next) => {
 };
 const signup = (req, res, next) => {
   console.log("SIGNUP");
+  const erros = validationResult(req);
+  if (!erros.isEmpty()) {
+    // We have errors
+    // console.log(erros.array());
+    const invalidParam = erros.array()[0].param;
+
+    throw new HttpError(
+      `Invalid  ${invalidParam} , please check your data`,
+      422
+    );
+  }
   const { name, email, password } = req.body;
   // Check if this user already exist
   const hasUser = Dummy_Users.find((u) => u.email === email);

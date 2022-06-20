@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
+const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 
 /*a controller file contains all middleware functions */
@@ -41,7 +42,7 @@ let Dummy_Places = [
 const getPlaceById = (req, res, next) => {
   //the id encoded in the url
   const placeId = req.params.pid;
-  console.log("GET request in places");
+  console.log("GET place");
   const place = Dummy_Places.find((p) => {
     return p.id === placeId;
   });
@@ -71,7 +72,19 @@ const getPlacesByUserId = (req, res, next) => {
 };
 //TODO : validation on body data
 const createPlace = (req, res, next) => {
-  console.log("POST request ADD PLACE");
+  console.log("ADD PLACE");
+
+  const erros = validationResult(req);
+  if (!erros.isEmpty()) {
+    //We do have errors
+    // console.log(erros.array());
+    const invalidParam = erros.array()[0].param;
+
+    throw new HttpError(
+      `Invalid  ${invalidParam} , please check your data`,
+      422
+    );
+  }
   const { title, description, coordinates, address, creator } = req.body;
   const createdPlace = {
     id: uuidv4(),
@@ -88,6 +101,9 @@ const createPlace = (req, res, next) => {
 const deletePlace = (req, res, next) => {
   console.log("DELETE");
   const placeId = req.params.pid;
+  if (!Dummy_Places.find((p) => p.id === placeId)) {
+    throw new HttpError("Could not find a place for the id.", 404);
+  }
   const place = Dummy_Places.find((p) => {
     return p.id === placeId;
   });
@@ -106,6 +122,15 @@ const deletePlace = (req, res, next) => {
 
 const updatePlace = (req, res, next) => {
   console.log("UPDATE");
+  const erros = validationResult(req);
+  if (!erros.isEmpty()) {
+    //We do have errors
+    const invalidParam = erros.array()[0].param;
+    throw new HttpError(
+      `Invalid  ${invalidParam} , please check your data`,
+      422
+    );
+  }
   const placeId = req.params.pid;
   const { title, description } = req.body;
 
