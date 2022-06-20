@@ -1,6 +1,8 @@
 const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
+
 const HttpError = require("../models/http-error");
+const getCoordsForAddress = require("../util/location");
 
 /*a controller file contains all middleware functions */
 
@@ -71,7 +73,7 @@ const getPlacesByUserId = (req, res, next) => {
   }
 };
 //TODO : validation on body data
-const createPlace = (req, res, next) => {
+const createPlace = async (req, res, next) => {
   console.log("ADD PLACE");
 
   const erros = validationResult(req);
@@ -79,13 +81,18 @@ const createPlace = (req, res, next) => {
     //We do have errors
     // console.log(erros.array());
     const invalidParam = erros.array()[0].param;
-
-    throw new HttpError(
-      `Invalid  ${invalidParam} , please check your data`,
-      422
+    //when working with async code throw will not work
+    next(
+      new HttpError(`Invalid  ${invalidParam} , please check your data`, 422)
     );
   }
-  const { title, description, coordinates, address, creator } = req.body;
+  const { title, description, address, creator } = req.body;
+  let coordinates;
+  try {
+    coordinates = await getCoordsForAddress(address);
+  } catch (error) {
+    return next(error);
+  }
   const createdPlace = {
     id: uuidv4(),
     title,
