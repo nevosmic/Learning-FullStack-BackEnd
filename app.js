@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
 const HttpError = require("./models/http-error");
 const placesRoutes = require("./routes/places-routes");
 const usersRoutes = require("./routes/users-routes");
@@ -27,4 +29,16 @@ app.use((error, req, res, next) => {
   res.status(error.code || 500); //500 - indicates that something went wrong on the server
   res.json({ message: error.message || "An unknown error occurred! " });
 });
-app.listen(5000);
+
+//jQnMh5t5O3QpGhDN
+mongoose
+  .connect(
+    "mongodb+srv://Nevo:jQnMh5t5O3QpGhDN@cluster1.rmijn4a.mongodb.net/places?retryWrites=true&w=majority"
+  )
+  .then(() => {
+    // if the connection was succesful we start our backend server
+    app.listen(5000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
