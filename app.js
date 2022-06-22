@@ -26,7 +26,8 @@ app.use((error, req, res, next) => {
   if (res.hedearSent) {
     return next(error); //forward the error
   }
-  res.status(error.code || 500); //500 - indicates that something went wrong on the server
+  //500 - indicates that something went wrong on the server
+  res.status(error.code || 500);
   res.json({ message: error.message || "An unknown error occurred! " });
 });
 

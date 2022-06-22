@@ -8,7 +8,9 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true }, // speeds up the querying process
   password: { type: String, required: true, minlength: 6 },
   image: { type: String, required: true },
-  places: { type: String, required: true }, // later we will store the id's of the places of this user
+  // one user can have multiple places - so we use array here
+  // ref attribute - connect the user schema to place schema
+  places: [{ type: mongoose.Types.ObjectId, required: true, ref: "Place" }],
 });
 
 // only create a new user if the email doesn't exist already
