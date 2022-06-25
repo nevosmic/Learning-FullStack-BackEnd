@@ -9,6 +9,22 @@ const usersRoutes = require("./routes/users-routes");
 const app = express();
 
 app.use(bodyParser.json());
+/*CORS error : resources on a server can only be requested by requests that are coming from the same server
+The browser sees that here we are trying to send a request from localhost 3000 to localhost 5000 two DIFFERENT domains - Frontend error
+to solve it-the server has to attach header to the response it send back to the client that allow the client to access the resources - than the browser see these headers and doesnt throw this error */
+
+//add a middleware to solve the CORS error
+app.use((req, res, next) => {
+  //add response headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin,X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
+
+  next(); //let the request continue to other middlewares
+});
 
 //register the middleware
 app.use("/api/places", placesRoutes); //express will only forward requests with path starts with /api/places
@@ -34,7 +50,7 @@ app.use((error, req, res, next) => {
 //jQnMh5t5O3QpGhDN
 mongoose
   .connect(
-    "mongodb+srv://Nevo:jQnMh5t5O3QpGhDN@cluster1.rmijn4a.mongodb.net/places?retryWrites=true&w=majority"
+    "mongodb+srv://Nevo:jQnMh5t5O3QpGhDN@cluster1.rmijn4a.mongodb.net/mern?retryWrites=true&w=majority"
   )
   .then(() => {
     // if the connection was succesful we start our backend server

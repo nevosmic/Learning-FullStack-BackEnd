@@ -64,13 +64,13 @@ const signup = async (req, res, next) => {
     const error = new HttpError("Signing up failed, please try again.", 500);
     return next(error);
   }
-
+  console.log("Backend user is sign in!");
   res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 const login = async (req, res, next) => {
   console.log("LOGIN");
   const { email, password } = req.body;
-
+  console.log(`EMAIL: ${email} PASSWORD: ${password}`);
   let user;
   try {
     user = await UserModule.findOne({ email: email });
