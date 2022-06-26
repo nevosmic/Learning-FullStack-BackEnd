@@ -87,7 +87,7 @@ const login = async (req, res, next) => {
       )
     );
   }
-  res.json({ message: "Logged in!" });
+  res.status(201).json({ user: user.toObject({ getters: true }) });
 };
 
 exports.getUsers = getUsers;
