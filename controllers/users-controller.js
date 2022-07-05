@@ -52,8 +52,7 @@ const signup = async (req, res, next) => {
   const createdUser = new UserModule({
     name,
     email,
-    image:
-      "https://cdn.britannica.com/43/93843-050-A1F1B668/White-House-Washington-DC.jpg",
+    image: req.file.path,
     password,
     places: [],
   });

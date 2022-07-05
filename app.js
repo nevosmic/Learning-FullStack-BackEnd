@@ -1,3 +1,6 @@
+const fs = require("fs");
+const absolutePath = require("path");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -5,8 +8,15 @@ const mongoose = require("mongoose");
 const HttpError = require("./models/http-error");
 const placesRoutes = require("./routes/places-routes");
 const usersRoutes = require("./routes/users-routes");
+const { use } = require("./routes/places-routes");
 
 const app = express();
+
+//images middleware - returns all files in /uploads/images if requested
+app.use(
+  "/uploads/images",
+  express.static(absolutePath.join("uploads", "images"))
+);
 
 app.use(bodyParser.json());
 /*CORS error : resources on a server can only be requested by requests that are coming from the same server
@@ -38,6 +48,12 @@ app.use((req, re, next) => {
 
 // deafult error handler middleware
 app.use((error, req, res, next) => {
+  if (req.file) {
+    //delete image file (signup error)
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
   //response has already been sent
   if (res.hedearSent) {
     return next(error); //forward the error
