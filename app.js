@@ -48,6 +48,7 @@ app.use((error, req, res, next) => {
 });
 
 //jQnMh5t5O3QpGhDN
+//connection to Mongoose
 mongoose
   .connect(
     "mongodb+srv://Nevo:jQnMh5t5O3QpGhDN@cluster1.rmijn4a.mongodb.net/mern?retryWrites=true&w=majority"

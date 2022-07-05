@@ -18,6 +18,7 @@ const getUsers = async (req, res, next) => {
   }
   res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
+
 const signup = async (req, res, next) => {
   console.log("SIGNUP");
   const errors = validationResult(req);
@@ -30,7 +31,7 @@ const signup = async (req, res, next) => {
     );
     return next(error);
   }
-
+  //see if work now with formData
   const { name, email, password } = req.body;
   // Check if this user already exist
   let existingUser;

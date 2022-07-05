@@ -135,7 +135,7 @@ const createPlace = async (req, res, next) => {
 const deletePlace = async (req, res, next) => {
   console.log("DELETE");
   const placeId = req.params.pid;
-
+  console.log("placeId: ", placeId);
   // find place and find this placeID in the user places so we can delete
   let place;
   try {
