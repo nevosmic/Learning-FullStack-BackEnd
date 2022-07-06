@@ -1,3 +1,4 @@
+const fs = require("fs");
 //const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 
@@ -81,12 +82,13 @@ const createPlace = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
+
   const createdPlace = new PlaceModule({
     title,
     description,
     address,
     location: coordinates,
-    image: req.file.path,
+    image: req.file.path, //extract the path that multer give automatically
     creator,
   });
 
@@ -112,6 +114,7 @@ const createPlace = async (req, res, next) => {
     //Transaction- a way to execute a group of operations as a unit.
     const sess = await mongoose.startSession();
     sess.startTransaction();
+    // store created place
     await createdPlace.save({ session: sess }); //unique id automatically created
     //add only *place id* to the user with mongoose method push
     user.places.push(createdPlace);
@@ -131,6 +134,7 @@ const createPlace = async (req, res, next) => {
   res.status(201).json({ place: createdPlace });
 };
 
+// TODO: explanation
 const deletePlace = async (req, res, next) => {
   console.log("DELETE");
   const placeId = req.params.pid;
@@ -151,9 +155,12 @@ const deletePlace = async (req, res, next) => {
     return next(error);
   }
 
+  const imagePath = place.image;
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
+    // delete place
     await place.remove({ session: sess });
     //remove only *place id* from user's places with mongoose method pull
     place.creator.places.pull(place);
@@ -167,6 +174,10 @@ const deletePlace = async (req, res, next) => {
     return next(error);
   }
 
+  // delete place image
+  fs.unlink(imagePath, (err) => {
+    console.log(err);
+  });
   res.status(200).json({ message: "Deleted place", place }); // => {place:place}
 };
 
