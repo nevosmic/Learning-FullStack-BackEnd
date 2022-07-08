@@ -184,6 +184,7 @@ const deletePlace = async (req, res, next) => {
 const updatePlace = async (req, res, next) => {
   console.log("UPDATE");
   const erros = validationResult(req);
+  // GENERAL VALIDATION
   if (!erros.isEmpty()) {
     //We do have errors
     const invalidParam = erros.array()[0].param;
@@ -194,6 +195,8 @@ const updatePlace = async (req, res, next) => {
   }
   const placeId = req.params.pid;
   const { title, description } = req.body;
+
+  //LOOKING FOR THE PLACE
   let place;
   try {
     place = await PlaceModule.findById(placeId);
@@ -202,10 +205,19 @@ const updatePlace = async (req, res, next) => {
     return next(error);
   }
 
+  // NOT AUTHORIZED TRY TO UPDATE ( a user that didnt create this place)
+  console.log("place.creator: ", place.creator);
+  console.log("req.userData.userId: ", req.userData.userId);
+
+  if (place.creator.toString() !== req.userData.userId) {
+    const error = new HttpError("You are not allowed to edit this place.", 401);
+    return next(error);
+  }
+
   place.title = title;
   place.description = description;
 
-  //store updated place in database
+  //STORE UPDATED PLACE IN DATABASE
   try {
     await place.save();
   } catch (err) {
