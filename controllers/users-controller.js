@@ -6,6 +6,8 @@ const jsonWebToken = require("jsonwebtoken");
 const HttpError = require("../models/http-error");
 const UserModule = require("../models/user");
 
+/*Here I generate a token for a user that signs up and when he logs in */
+
 const getUsers = async (req, res, next) => {
   console.log("GET USERS");
   let users;
@@ -120,7 +122,7 @@ const login = async (req, res, next) => {
     return next(
       new HttpError(
         "Could not identify user, credentials (email) seem to be wrong",
-        401
+        403
       )
     );
   }
@@ -141,7 +143,7 @@ const login = async (req, res, next) => {
     return next(
       new HttpError(
         "Could not identify user password, please try another one.",
-        401
+        403
       )
     );
   }

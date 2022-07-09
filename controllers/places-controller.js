@@ -37,7 +37,7 @@ const getPlaceById = async (req, res, next) => {
 
 const getPlacesByUserId = async (req, res, next) => {
   const userId = req.params.uid;
-  console.log(userId);
+  console.log("userId:", userId);
   let userPlaces;
   try {
     //populate- access to the places in user collection by userId
@@ -49,7 +49,7 @@ const getPlacesByUserId = async (req, res, next) => {
     const error = new HttpError("Could not find this user place.", 500);
     return next(error);
   }
-  //if (userPlaces.length === 0) {
+
   if (!userPlaces || userPlaces.places.length === 0) {
     next(new HttpError("Could not find places for the provided user id.", 404)); //will reach the next error middleware in line
   } else {
@@ -74,7 +74,10 @@ const createPlace = async (req, res, next) => {
       new HttpError(`Invalid  ${invalidParam} , please check your data`, 422)
     );
   }
-  const { title, description, address, creator } = req.body;
+
+  const { title, description, address } = req.body;
+  /*const { title, description, address, creator } = req.body;
+  here I get the id from frontEnd user ->changed it to the id extracted from token line 95 */
 
   let coordinates;
   try {
@@ -89,13 +92,13 @@ const createPlace = async (req, res, next) => {
     address,
     location: coordinates,
     image: req.file.path, //extract the path that multer give automatically
-    creator,
+    creator: req.userData.userId,
   });
 
   //check if the user id exist already (signed up)
   let user;
   try {
-    user = await UserModule.findById(creator);
+    user = await UserModule.findById(req.userData.userId);
   } catch (err) {
     const error = new HttpError("Creating place failed, please try again", 500);
     return next(error);
@@ -107,7 +110,7 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(user);
+  console.log("user: ", user);
 
   //insert to database
   try {
@@ -155,8 +158,20 @@ const deletePlace = async (req, res, next) => {
     return next(error);
   }
 
+  // NOT AUTHORIZED TRY TO DELETE ( a user that didnt create this place)
+  console.log("place.creator: ", place.creator.id);
+  console.log("req.userData.userId: ", req.userData.userId);
+
+  if (place.creator.id !== req.userData.userId) {
+    const error = new HttpError(
+      "You are not allowed to delete this place.",
+      401
+    );
+    return next(error);
+  }
   const imagePath = place.image;
 
+  // DELETE PIPELINE
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -176,7 +191,7 @@ const deletePlace = async (req, res, next) => {
 
   // delete place image
   fs.unlink(imagePath, (err) => {
-    console.log(err);
+    console.log("err delete place image - places-controllers 191:", err);
   });
   res.status(200).json({ message: "Deleted place", place }); // => {place:place}
 };

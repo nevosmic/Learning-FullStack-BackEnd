@@ -11,7 +11,7 @@ async function getCoordsForAddress(address) {
   //note that the response is an array, so for now I will be just taking the first element.
   const data = response.data[0];
 
-  console.log(data);
+  console.log("data:", data);
 
   if (!data || data.status === "ZERO_RESULTS") {
     const error = new HttpError(

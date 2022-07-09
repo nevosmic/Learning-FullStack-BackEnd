@@ -13,7 +13,7 @@ const checkToken = (req, res, next) => {
   try {
     token = req.headers.authorization.split(" ")[1]; //Authorization: 'Bearer TOKEN'
     if (!token) {
-      //Authorization header isnt set at all ->split failes
+      //Authorization header not set at all ->split failes
       throw new Error("Authentication failed!!");
     }
     //there is a token, now check if valid -WITH THE SAME PRIVATE KEY
@@ -21,7 +21,7 @@ const checkToken = (req, res, next) => {
     req.userData = { userId: decodedToken.userId };
     next();
   } catch (err) {
-    const error = new HttpError("Authentication failed", 401);
+    const error = new HttpError("Authentication failed", 403);
     return next(error);
   }
 };

@@ -52,7 +52,7 @@ app.use((error, req, res, next) => {
   if (req.file) {
     //delete image file (signup error)
     fs.unlink(req.file.path, (err) => {
-      console.log(err);
+      console.log("err image delete:", err);
     });
   }
   //response has already been sent
@@ -75,5 +75,5 @@ mongoose
     app.listen(5000);
   })
   .catch((err) => {
-    console.log(err);
+    console.log("err:", err);
   });
