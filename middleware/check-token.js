@@ -17,7 +17,7 @@ const checkToken = (req, res, next) => {
       throw new Error("Authentication failed!!");
     }
     //there is a token, now check if valid -WITH THE SAME PRIVATE KEY
-    const decodedToken = jsonWebToken.verify(token, "private_key_dont_share");
+    const decodedToken = jsonWebToken.verify(token, process.env.PRIVATE_KEY);
     req.userData = { userId: decodedToken.userId };
     next();
   } catch (err) {

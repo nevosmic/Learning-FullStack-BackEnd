@@ -68,7 +68,7 @@ app.use((error, req, res, next) => {
 //connection to Mongoose
 mongoose
   .connect(
-    "mongodb+srv://Nevo:jQnMh5t5O3QpGhDN@cluster1.rmijn4a.mongodb.net/mern?retryWrites=true&w=majority"
+    `mongodb+srv://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@cluster1.rmijn4a.mongodb.net/${process.env.DATABASE_COLLECTION}?retryWrites=true&w=majority`
   )
   .then(() => {
     // if the connection was succesful we start our backend server

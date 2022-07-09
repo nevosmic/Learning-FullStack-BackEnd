@@ -1,0 +1,9 @@
+{
+  "env": {
+    "DATABASE_USERNAME": "Nevo",
+    "DATABASE_PASSWORD": "jQnMh5t5O3QpGhDN",
+    "DATABASE_COLLECTION": "mern",
+    "GOOGLE_API_KEY": "pk.0e266c19ee7ba0024a596fc0dfeb60e8",
+    "PRIVATE_KEY": "private_key_dont_share"
+  }
+}

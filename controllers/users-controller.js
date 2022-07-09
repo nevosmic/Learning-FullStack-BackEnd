@@ -93,7 +93,7 @@ const signup = async (req, res, next) => {
   try {
     token = jsonWebToken.sign(
       { userId: createdUser.id, email: createdUser.email },
-      "private_key_dont_share",
+      process.env.PRIVATE_KEY,
       { expiresIn: "1h" }
     );
   } catch (err) {
@@ -152,7 +152,7 @@ const login = async (req, res, next) => {
   try {
     token = jsonWebToken.sign(
       { userId: user.id, email: user.email },
-      "private_key_dont_share",
+      process.env.PRIVATE_KEY,
       { expiresIn: "1h" }
     );
   } catch (err) {
