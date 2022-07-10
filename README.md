@@ -10,6 +10,7 @@ Motivation for this project:
 -Gain more experience with FullStack development especially with MERN architecture
 
 MERN stands for MongoDB, Express, React, Node
+
 <img src="screen-shots/mern.jpg" width="200">
 
 ![ScreenShot](screen-shots/technologies.jpg)
@@ -37,7 +38,7 @@ Can upload his own place that he had visited, edit and delete it.
 
 •Feature 5: View place on a map
 
-<img src="screen-shots/signup.jpg" width="600">
+<img src="screen-shots/signup.jpg" width="400">
 
 ![ScreenShot](screen-shots/signup.jpg)
 
