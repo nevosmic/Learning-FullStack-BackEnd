@@ -34,7 +34,13 @@ Can upload his own place that he had visited, edit and delete it.
 
 •Feature 5: View place on a map
 
-<img src="screen-shots/signup.jpg" width="300"><img src="screen-shots/first%20page.jpg" width="300"><img src="screen-shots/myplaces.jpg" width="300"><img src="screen-shots/view%20on%20map.jpg" width="300">
+<img src="screen-shots/signup.jpg" width="300">
+
+<img src="screen-shots/first%20page.jpg" width="300">
+
+<img src="screen-shots/myplaces.jpg" width="300">
+
+<img src="screen-shots/view%20on%20map.jpg" width="300">
 
 ### What I want to add in the future:
 
