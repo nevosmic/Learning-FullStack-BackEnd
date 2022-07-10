@@ -9,7 +9,7 @@ Motivation for this project:
 -Encourage my friends to travel and share their impressions of places they had visited
 -Gain more experience with FullStack development especially with MERN architecture
 
-MERN stands for MongoDB, Express, React, Node ![ScreenShot](screen-shots/mern.jpg)
+MERN stands for MongoDB, Express, React, Node <img src="screen-shots/mern.jpg" width="200">
 
 ![ScreenShot](screen-shots/technologies.jpg)
 
@@ -44,8 +44,8 @@ Can upload his own place that he had visited, edit and delete it.
 
 ![ScreenShot](screen-shots/view%20on%20map.jpg)
 
-What I want to add in the future:
--defaulte picture for a user/ a location
--travel description and cost of travel
--option to rate the place
--main page display users in order by highest ratings
+###What I want to add in the future:
+•defaulte picture for a user/ a location
+•travel description and cost of travel
+•option to rate the place
+•main page display users in order by highest ratings
