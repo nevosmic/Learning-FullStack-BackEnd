@@ -1,3 +1,7 @@
+BACKEND
+
+[For frontend](https://github.com/nevosmic/SharePlaces-FrontEnd)
+
 # My MERN Stack Project - SharePlaces App:
 
 **SharePlaces**: This fullstack web application allows people to share their travel experience to a community of other travellers using this application.
