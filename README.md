@@ -15,10 +15,6 @@ MERN stands for MongoDB, Express, React, Node
 
 ![ScreenShot](screen-shots/technologies.jpg)
 
-**_Back-End: Express(.js) and Node(.js)_**
-
-**_Front-End: React(.js)_**
-
 **Basic usage description:**
 
 A user can sign up/log in.
@@ -38,15 +34,7 @@ Can upload his own place that he had visited, edit and delete it.
 
 •Feature 5: View place on a map
 
-<img src="screen-shots/signup.jpg" width="400">
-
-![ScreenShot](screen-shots/signup.jpg)
-
-![ScreenShot](screen-shots/first%20page.jpg)
-
-![ScreenShot](screen-shots/myplaces.jpg)
-
-![ScreenShot](screen-shots/view%20on%20map.jpg)
+<img src="screen-shots/signup.jpg" width="300"><img src="screen-shots/first%20page.jpg" width="300"><img src="screen-shots/myplaces.jpg" width="300"><img src="screen-shots/view%20on%20map.jpg" width="300">
 
 ### What I want to add in the future:
 
